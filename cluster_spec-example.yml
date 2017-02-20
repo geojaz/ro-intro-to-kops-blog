@@ -1,0 +1,98 @@
+apiVersion: kops/v1alpha2
+kind: Cluster
+metadata:
+  name: demo.kube.example.com
+spec:
+  api:
+    loadBalancer:
+      type: Public
+  channel: stable
+  cloudProvider: aws
+  configBase: s3://kops-state-store/demo.kube.example.com
+  dnsZone: demo.kube.example.com
+  etcdClusters:
+  - etcdMembers:
+    - instanceGroup: master-us-east-2a
+      name: a
+    name: main
+  - etcdMembers:
+    - instanceGroup: master-us-east-2a
+      name: a
+    name: events
+  kubernetesApiAccess:
+  - 0.0.0.0/0
+  kubernetesVersion: 1.5.3
+  masterInternalName: api.internal.demo.kube.example.com
+  masterPublicName: api.demo.kube.example.com
+  networkCIDR: 172.20.0.0/16
+  networkID: vpc-placeholder
+  networking:
+    weave: {}
+  nonMasqueradeCIDR: 100.64.0.0/10
+  sshAccess:
+  - 0.0.0.0/0
+  subnets:
+  - cidr: 172.20.16.0/24
+    egress: nat-placeholder
+    name: us-east-2a
+    type: Private
+    zone: us-east-2a
+  - cidr: 172.20.17.0/24
+    egress: nat-placeholder
+    name: us-east-2b
+    type: Private
+    zone: us-east-2b
+  - cidr: 172.20.18.0/24
+    egress: nat-placeholder
+    name: us-east-2c
+    type: Private
+    zone: us-east-2c
+  - cidr: 172.20.20.0/24
+    name: utility-us-east-2a
+    type: Utility
+    zone: us-east-2a
+  - cidr: 172.20.21.0/24
+    name: utility-us-east-2b
+    type: Utility
+    zone: us-east-2b
+  - cidr: 172.20.22.0/24
+    name: utility-us-east-2c
+    type: Utility
+    zone: us-east-2c
+  topology:
+    dns:
+      type: Public
+    masters: private
+    nodes: private
+---
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  labels:
+    kops.k8s.io/cluster: demo.kube.example.com
+  name: master-us-east-2a
+spec:
+  image: kope.io/k8s-1.5-debian-jessie-amd64-hvm-ebs-2017-01-09
+  machineType: t2.medium
+  maxSize: 1
+  minSize: 1
+  role: Master
+  subnets:
+  - us-east-2a
+---
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  labels:
+    kops.k8s.io/cluster: demo.kube.example.com
+  name: nodes
+spec:
+  image: kope.io/k8s-1.5-debian-jessie-amd64-hvm-ebs-2017-01-09
+  machineType: t2.micro
+  maxSize: 3
+  minSize: 3
+  role: Node
+  subnets:
+  - us-east-2a
+  - us-east-2b
+  - us-east-2c
