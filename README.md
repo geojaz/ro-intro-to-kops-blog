@@ -4,10 +4,10 @@ At RO, we always talk about "RO-style" configurations, which I think is a really
 
 There are 2 steps to creating kubernetes clusters with kops in the ReactiveOps style.
 
-1) Configure the VPC (we use Terraform, but there are other great options to do this as well)
-2) Let kops do everything else
-   a. Use kops to layer in additional networking resources in the same VPC
-   b. Use kops to launch the instances that make up your cluster, let it come up, verify it works!
+1. Configure the VPC (we use Terraform, but there are other great options to do this as well)
+2. Let kops do everything else
+   - Use kops to layer in additional networking resources in the same VPC
+   - Use kops to launch the instances that make up your cluster, let it come up, verify it works!
 
 Step 1: 
 VPC Configuration-
