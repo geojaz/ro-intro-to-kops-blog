@@ -57,3 +57,9 @@ ip-172-20-18-239.us-east-2.compute.internal node  True
 
 Your cluster blog.kube.example.com is ready
 ```
+
+# Takeaways- Why we work this way
+This seems like a pretty complicated way to configure your kubernetes installation. So Why? 
+- We use the best tools for the job at each point of the process, precision of tool choice
+- Separation of concerns, kubernetes is handled by kops, clear responsiblity for each toolpho
+- Best of breed updates and cluster management
