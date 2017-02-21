@@ -9,6 +9,7 @@ There are 2 steps to creating kubernetes clusters with kops in the ReactiveOps s
    a. Use kops to layer in additional networking resources in the same VPC
    b. Use kops to launch the instances that make up your cluster, let it come up, verify it works!
 
+Step 1: 
 VPC Configuration-
 We use Terraform from Hashicorp for creating the AWS VPC and laying down the basic networking elements. (maybe a future blog post about this in depth? When we open source it!). I won't bore you too much with the details but the basic idea is that we use terraform to create a VPC with a number of subnets for a variety of uses. There are 4 sets that we use for different things. The important things to note here are:
 
@@ -16,6 +17,7 @@ We use Terraform from Hashicorp for creating the AWS VPC and laying down the bas
   - The VPC can hold multiple distinct kubernetes clusters
   - We have a concept of public and private subnets that I'll describe in more depth later, but for each availability zone, we direct Terraform to create a single NAT Gateway through which private networks may route to the outside internet
 
+Step 2:
 kops-
 Now that we have our VPC and our basic networking resources available, we can get into the kubernetes specific configuration. As discussed in part 1 of this series, kops is the best tool for the job when it comes to end to end provisioning for kubernetes.
 
